@@ -67,38 +67,20 @@ public class StandardGameIsScored {
         final String score = game.score();
         assertThat(score).isEqualTo(expectedScore);
     }
+}
 
+class FakeEventStream implements EventStream {
+    private final List<Event> events = new ArrayList<>();
 
-    private class FakeEventStream {
-        private final List<Event> events = new ArrayList<>();
-
-        public void addAll(final List<Event> events) {
-            this.events.addAll(events);
-        }
-
-        List<Event> readAll() {
-            return events;
-        }
+    @Override
+    public void addAll(final List<Event> events) {
+        this.events.addAll(events);
     }
 
-    private class Game {
-        private TennisScore tennisScore = new LoveAll();
-
-        public Game(final FakeEventStream eventStream) {
-
-            eventStream.readAll().forEach(e -> {
-                if (PlayerOneScored.class.isInstance(e)) {
-                    tennisScore = tennisScore.when((PlayerOneScored) e);
-                }
-                if (PlayerTwoScored.class.isInstance(e)) {
-                    tennisScore = tennisScore.when((PlayerTwoScored) e);
-                }
-            });
-
-        }
-
-        String score() {
-            return this.tennisScore.toString();
-        }
+    @Override
+    public List<Event> readAll() {
+        return events;
     }
 }
+
+
