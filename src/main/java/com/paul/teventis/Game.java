@@ -5,14 +5,17 @@ class Game {
 
     Game(final EventStream eventStream) {
 
-        eventStream.readAll().forEach(e -> {
+        for (Event e : eventStream.readAll()) {
             if (PlayerOneScored.class.isInstance(e)) {
                 tennisScore = tennisScore.when((PlayerOneScored) e);
-            }
-            else if (PlayerTwoScored.class.isInstance(e)) {
+            } else if (PlayerTwoScored.class.isInstance(e)) {
                 tennisScore = tennisScore.when((PlayerTwoScored) e);
             }
-        });
+
+            if (someoneHasWon()) {
+                break;
+            }
+        }
 
         if (GamePlayerOne.class.isInstance(tennisScore)) {
             eventStream.write((GamePlayerOne) tennisScore);
@@ -22,6 +25,11 @@ class Game {
             eventStream.write((GamePlayerTwo) tennisScore);
         }
 
+    }
+
+    private boolean someoneHasWon() {
+        return GamePlayerOne.class.isInstance(tennisScore)
+                || GamePlayerTwo.class.isInstance(tennisScore);
     }
 
     String score() {
