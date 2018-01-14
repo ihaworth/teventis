@@ -69,18 +69,4 @@ public class StandardGameIsScored {
     }
 }
 
-class FakeEventStream implements EventStream {
-    private final List<Event> events = new ArrayList<>();
-
-    @Override
-    public void addAll(final List<Event> events) {
-        this.events.addAll(events);
-    }
-
-    @Override
-    public List<Event> readAll() {
-        return events;
-    }
-}
-
 

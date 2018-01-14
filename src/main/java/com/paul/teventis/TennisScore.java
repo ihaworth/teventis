@@ -294,23 +294,6 @@ class AdvantagePlayerOne implements TennisScore {
     }
 }
 
-class GamePlayerOne implements TennisScore {
-    @Override
-    public String toString() {
-        return "Game player one";
-    }
-
-    @Override
-    public TennisScore when(final PlayerOneScored e) {
-        return null;
-    }
-
-    @Override
-    public TennisScore when(final PlayerTwoScored e) {
-        return null;
-    }
-}
-
 class AdvantagePlayerTwo implements TennisScore {
     @Override
     public String toString() {
@@ -326,7 +309,24 @@ class AdvantagePlayerTwo implements TennisScore {
     }
 }
 
-class GamePlayerTwo implements TennisScore {
+class GamePlayerOne implements TennisScore, Event {
+    @Override
+    public String toString() {
+        return "Game player one";
+    }
+
+    @Override
+    public TennisScore when(final PlayerOneScored e) {
+        return this;
+    }
+
+    @Override
+    public TennisScore when(final PlayerTwoScored e) {
+        return this;
+    }
+}
+
+class GamePlayerTwo implements TennisScore, Event {
     @Override
     public String toString() {
         return "Game player two";
@@ -334,11 +334,11 @@ class GamePlayerTwo implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return null;
+        return this;
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return null;
+        return this;
     }
 }

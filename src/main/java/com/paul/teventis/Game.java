@@ -8,12 +8,19 @@ class Game {
         eventStream.readAll().forEach(e -> {
             if (PlayerOneScored.class.isInstance(e)) {
                 tennisScore = tennisScore.when((PlayerOneScored) e);
-                return;
             }
-            if (PlayerTwoScored.class.isInstance(e)) {
+            else if (PlayerTwoScored.class.isInstance(e)) {
                 tennisScore = tennisScore.when((PlayerTwoScored) e);
             }
         });
+
+        if (GamePlayerOne.class.isInstance(tennisScore)) {
+            eventStream.write((GamePlayerOne) tennisScore);
+        }
+
+        if (GamePlayerTwo.class.isInstance(tennisScore)) {
+            eventStream.write((GamePlayerTwo) tennisScore);
+        }
 
     }
 
