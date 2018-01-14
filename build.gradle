@@ -10,6 +10,8 @@ repositories {
 }
 
 dependencies {
+    compile 'com.google.guava:guava:23.6-jre'
+    
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.assertj', name: 'assertj-core'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.9.0'
 }
