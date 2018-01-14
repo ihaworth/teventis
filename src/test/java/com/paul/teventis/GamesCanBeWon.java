@@ -10,13 +10,15 @@ public class GamesCanBeWon {
     @Test
     public void playerOneCanWinAGame() {
         final FakeEventStream inMemoryEventStream = new FakeEventStream();
-        inMemoryEventStream.addAll(ImmutableList.of(
+        Game game = new Game(inMemoryEventStream);
+
+        ImmutableList.of(
                 new PlayerOneScored(),
                 new PlayerOneScored(),
                 new PlayerOneScored(),
                 new PlayerOneScored()
-        ));
-        new Game(inMemoryEventStream);
+        ).forEach(game::when);
+
         Event e = inMemoryEventStream.readLast();
         assertThat(e).isInstanceOf(GamePlayerOne.class);
     }
@@ -24,13 +26,15 @@ public class GamesCanBeWon {
     @Test
     public void playerTwoCanWinAGame() {
         final FakeEventStream inMemoryEventStream = new FakeEventStream();
-        inMemoryEventStream.addAll(ImmutableList.of(
+        Game game = new Game(inMemoryEventStream);
+
+        ImmutableList.of(
                 new PlayerTwoScored(),
                 new PlayerTwoScored(),
                 new PlayerTwoScored(),
                 new PlayerTwoScored()
-        ));
-        new Game(inMemoryEventStream);
+        ).forEach(game::when);
+
         Event e = inMemoryEventStream.readLast();
         assertThat(e).isInstanceOf(GamePlayerTwo.class);
     }

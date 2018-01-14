@@ -74,8 +74,9 @@ public class StandardGameIsScored {
     @Test
     public void PlayersWinningPointsChangesTheGamesScore() {
         final FakeEventStream inMemoryEventStream = new FakeEventStream();
-        inMemoryEventStream.addAll(playersScoringEvents);
+
         final Game game = new Game(inMemoryEventStream);
+        playersScoringEvents.forEach(game::when);
         final String score = game.score();
         assertThat(score).isEqualTo(expectedScore);
     }

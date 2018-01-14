@@ -1,20 +1,23 @@
 package com.paul.teventis;
 
 class Game {
+
+    private final EventStream eventStream;
     private TennisScore tennisScore = new LoveAll();
 
     Game(final EventStream eventStream) {
+        this.eventStream = eventStream;
+    }
 
-        for (Event e : eventStream.readAll()) {
-            if (PlayerOneScored.class.isInstance(e)) {
-                tennisScore = tennisScore.when((PlayerOneScored) e);
-            } else if (PlayerTwoScored.class.isInstance(e)) {
-                tennisScore = tennisScore.when((PlayerTwoScored) e);
-            }
+    void when(Event e) {
+        if (someoneHasWon()) {
+            return;
+        }
 
-            if (someoneHasWon()) {
-                break;
-            }
+        if (PlayerOneScored.class.isInstance(e)) {
+            tennisScore = tennisScore.when((PlayerOneScored) e);
+        } else if (PlayerTwoScored.class.isInstance(e)) {
+            tennisScore = tennisScore.when((PlayerTwoScored) e);
         }
 
         if (GamePlayerOne.class.isInstance(tennisScore)) {
@@ -24,7 +27,6 @@ class Game {
         if (GamePlayerTwo.class.isInstance(tennisScore)) {
             eventStream.write((GamePlayerTwo) tennisScore);
         }
-
     }
 
     private boolean someoneHasWon() {
