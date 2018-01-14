@@ -317,12 +317,14 @@ class GamePlayerOne implements TennisScore, Event {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return this;
+        //ugh
+        throw new CannotScoreAfterGameIsWon();
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return this;
+        //ugh
+        throw new CannotScoreAfterGameIsWon();
     }
 }
 
@@ -334,11 +336,13 @@ class GamePlayerTwo implements TennisScore, Event {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return this;
+        //ugh
+        throw new CannotScoreAfterGameIsWon();
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return this;
+        //ugh
+        throw new CannotScoreAfterGameIsWon();
     }
 }
