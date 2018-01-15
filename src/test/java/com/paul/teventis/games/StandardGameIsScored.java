@@ -1,5 +1,9 @@
-package com.paul.teventis;
+package com.paul.teventis.games;
 
+import com.paul.teventis.*;
+import com.paul.teventis.events.Event;
+import com.paul.teventis.events.PlayerOneScored;
+import com.paul.teventis.events.PlayerTwoScored;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

@@ -1,15 +1,19 @@
 package com.paul.teventis;
 
-class Game {
+import com.paul.teventis.events.Event;
+import com.paul.teventis.events.PlayerOneScored;
+import com.paul.teventis.events.PlayerTwoScored;
+
+public class Game {
 
     private final EventStream eventStream;
     private TennisScore tennisScore = new LoveAll();
 
-    Game(final EventStream eventStream) {
+    public Game(final EventStream eventStream) {
         this.eventStream = eventStream;
     }
 
-    void when(Event e) {
+    public void when(Event e) {
         if (someoneHasWon()) {
             return;
         }
@@ -34,7 +38,7 @@ class Game {
                 || GamePlayerTwo.class.isInstance(tennisScore);
     }
 
-    String score() {
+    public String score() {
         return this.tennisScore.toString();
     }
 }

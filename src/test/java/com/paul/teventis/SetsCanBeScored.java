@@ -1,6 +1,8 @@
 package com.paul.teventis;
 
 import com.google.common.collect.ImmutableList;
+import com.paul.teventis.events.Event;
+import com.paul.teventis.events.PlayerOneScored;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -45,7 +47,9 @@ public class SetsCanBeScored {
         final FakeEventStream inMemoryEventStream = new FakeEventStream();
         inMemoryEventStream.addAll(pointsScored);
 
-        new Set(inMemoryEventStream);
+        Set set = new Set(inMemoryEventStream);
+        pointsScored.forEach(set::when);
+
         final SetScoreAnnounced scoreAnnounced = (SetScoreAnnounced) inMemoryEventStream.readLast();
 
         assertThat(scoreAnnounced.toString()).isEqualTo(setScoreAnnounced);
@@ -68,11 +72,17 @@ class SetScoreAnnounced implements Event {
 
 class Set {
 
+    private final EventStream eventStream;
+
+    Game game;
+
     public Set(final EventStream eventStream) {
+        this.eventStream = eventStream;
         eventStream.write(new SetScoreAnnounced("0-0"));
+        game = new Game(eventStream);
+    }
 
-        eventStream.readAll().forEach(e -> {
+    void when(Event e) {
 
-        });
     }
 }
