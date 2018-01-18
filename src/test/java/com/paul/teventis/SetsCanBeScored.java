@@ -24,18 +24,59 @@ public class SetsCanBeScored {
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                         {"0-0", ImmutableList.of(new SetStarted())},
-                        {"1-0", winOneGame()}
+                        {"1-0", playerOneWinOneGame()},
+                        {"0-1", playerTwoWinOneGame()},
+                        {"2-0", playerOneWinTwoGames()},
+                {"0-2", playerTwoWinTwoGames()}
                 }
         );
     }
 
-    private static Object winOneGame() {
+    private static Object playerOneWinOneGame() {
         return ImmutableList.of(
                 new SetStarted(),
                 new PlayerOneScored(),
                 new PlayerOneScored(),
                 new PlayerOneScored(),
                 new PlayerOneScored()
+        );
+    }
+
+    private static Object playerTwoWinOneGame() {
+        return ImmutableList.of(
+                new SetStarted(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored()
+        );
+    }
+
+    private static Object playerOneWinTwoGames() {
+        return ImmutableList.of(
+                new SetStarted(),
+                new PlayerOneScored(),
+                new PlayerOneScored(),
+                new PlayerOneScored(),
+                new PlayerOneScored(),
+                new PlayerOneScored(),
+                new PlayerOneScored(),
+                new PlayerOneScored(),
+                new PlayerOneScored()
+        );
+    }
+
+    private static Object playerTwoWinTwoGames() {
+        return ImmutableList.of(
+                new SetStarted(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored(),
+                new PlayerTwoScored()
         );
     }
 
@@ -80,7 +121,8 @@ class SetScoreAnnounced implements Event {
 class Set {
 
     private final EventStream eventStream;
-    private String setScore = "0-0";
+    private int gamesPlayerOne = 0;
+    private int gamesPlayerTwo = 0;
 
     Game game;
 
@@ -92,18 +134,27 @@ class Set {
 
     void when(Event e) {
         if (SetStarted.class.isInstance(e)) {
-            eventStream.write(new SetScoreAnnounced(setScore));
+            announceScore();
             game = new Game(eventStream);
         }
         if (GamePlayerOne.class.isInstance(e)) {
-            setScore = "1-0";
-            eventStream.write(new SetScoreAnnounced(setScore));
+            gamesPlayerOne++;
+            announceScore();
             game = new Game(eventStream);
         }
-
+        if (GamePlayerTwo.class.isInstance(e)) {
+            gamesPlayerTwo++;
+            announceScore();
+            game = new Game(eventStream);
+        }
         if (PlayerOneScored.class.isInstance(e)
                 || PlayerTwoScored.class.isInstance(e)) {
             game.when(e);
         }
+    }
+
+    private void announceScore() {
+        String score = String.format("%s-%s", gamesPlayerOne, gamesPlayerTwo);
+        eventStream.write(new SetScoreAnnounced(score));
     }
 }
