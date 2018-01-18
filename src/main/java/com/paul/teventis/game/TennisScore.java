@@ -1,7 +1,4 @@
-package com.paul.teventis;
-
-import com.paul.teventis.events.PlayerOneScored;
-import com.paul.teventis.events.PlayerTwoScored;
+package com.paul.teventis.game;
 
 interface TennisScore {
 

@@ -1,8 +1,7 @@
-package com.paul.teventis;
+package com.paul.teventis.game;
 
 import com.paul.teventis.events.Event;
-import com.paul.teventis.events.PlayerOneScored;
-import com.paul.teventis.events.PlayerTwoScored;
+import com.paul.teventis.events.EventStream;
 
 public class Game {
 

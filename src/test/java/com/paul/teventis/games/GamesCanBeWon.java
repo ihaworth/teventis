@@ -3,8 +3,11 @@ package com.paul.teventis.games;
 import com.google.common.collect.ImmutableList;
 import com.paul.teventis.*;
 import com.paul.teventis.events.Event;
-import com.paul.teventis.events.PlayerOneScored;
-import com.paul.teventis.events.PlayerTwoScored;
+import com.paul.teventis.game.PlayerOneScored;
+import com.paul.teventis.game.PlayerTwoScored;
+import com.paul.teventis.game.Game;
+import com.paul.teventis.game.GamePlayerOne;
+import com.paul.teventis.game.GamePlayerTwo;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,4 +1,6 @@
-package com.paul.teventis.events;
+package com.paul.teventis.set;
+
+import com.paul.teventis.events.Event;
 
 public class SetScoreAnnounced implements Event {
     private final String score;

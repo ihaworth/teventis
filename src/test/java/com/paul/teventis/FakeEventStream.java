@@ -1,6 +1,7 @@
 package com.paul.teventis;
 
 import com.paul.teventis.events.Event;
+import com.paul.teventis.events.EventStream;
 
 import java.util.ArrayList;
 import java.util.List;

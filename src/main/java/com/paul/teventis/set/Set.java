@@ -1,8 +1,11 @@
-package com.paul.teventis;
+package com.paul.teventis.set;
 
 import com.paul.teventis.events.*;
+import com.paul.teventis.game.*;
+import com.paul.teventis.set.SetScoreAnnounced;
+import com.paul.teventis.set.SetStarted;
 
-class Set {
+public class Set {
 
     private final EventStream eventStream;
     private int gamesPlayerOne = 0;
@@ -16,7 +19,7 @@ class Set {
         this.eventStream.subscribe(this::when);
     }
 
-    void when(Event e) {
+    public void when(Event e) {
         if (SetStarted.class.isInstance(e)) {
             announceScore();
             game = new Game(eventStream);

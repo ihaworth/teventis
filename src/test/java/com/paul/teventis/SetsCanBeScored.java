@@ -2,6 +2,11 @@ package com.paul.teventis;
 
 import com.google.common.collect.ImmutableList;
 import com.paul.teventis.events.*;
+import com.paul.teventis.game.PlayerOneScored;
+import com.paul.teventis.game.PlayerTwoScored;
+import com.paul.teventis.set.Set;
+import com.paul.teventis.set.SetScoreAnnounced;
+import com.paul.teventis.set.SetStarted;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

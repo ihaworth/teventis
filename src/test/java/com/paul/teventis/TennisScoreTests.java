@@ -1,7 +1,10 @@
 package com.paul.teventis;
 
-import com.paul.teventis.events.PlayerOneScored;
-import com.paul.teventis.events.PlayerTwoScored;
+import com.paul.teventis.game.PlayerOneScored;
+import com.paul.teventis.game.PlayerTwoScored;
+import com.paul.teventis.game.CannotScoreAfterGameIsWon;
+import com.paul.teventis.game.GamePlayerOne;
+import com.paul.teventis.game.GamePlayerTwo;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;

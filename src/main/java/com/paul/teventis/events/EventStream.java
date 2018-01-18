@@ -1,11 +1,11 @@
-package com.paul.teventis;
+package com.paul.teventis.events;
 
 import com.paul.teventis.events.Event;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-interface EventStream {
+public interface EventStream {
     void addAll(List<Event> events);
 
     List<Event> readAll();

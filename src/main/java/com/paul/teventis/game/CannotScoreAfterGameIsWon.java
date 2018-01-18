@@ -1,4 +1,4 @@
-package com.paul.teventis;
+package com.paul.teventis.game;
 
 public class CannotScoreAfterGameIsWon extends Error {
 }
