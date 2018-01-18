@@ -1,6 +1,7 @@
-package com.paul.teventis;
+package com.paul.teventis.sets;
 
 import com.google.common.collect.ImmutableList;
+import com.paul.teventis.FakeEventStore;
 import com.paul.teventis.game.GamePlayerOne;
 import com.paul.teventis.game.GamePlayerTwo;
 import com.paul.teventis.set.Set;

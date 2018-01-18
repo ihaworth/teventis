@@ -9,6 +9,7 @@ import com.paul.teventis.game.PlayerTwoScored;
 import com.paul.teventis.game.Game;
 import com.paul.teventis.game.GamePlayerOne;
 import com.paul.teventis.game.GamePlayerTwo;
+import com.paul.teventis.set.Set;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -19,10 +20,10 @@ public class GamesCanBeWon {
 
     @Test
     public void playerOneCanWinAGame() {
-        String arbitraryId = UUID.randomUUID().toString();
+        String matchId = UUID.randomUUID().toString();
 
         final FakeEventStore inMemoryEventStore = new FakeEventStore();
-        Game game = new Game(inMemoryEventStore, arbitraryId);
+        Game game = new Game(inMemoryEventStore, matchId);
 
         ImmutableList.of(
                 new PlayerOneScored(),
@@ -31,7 +32,7 @@ public class GamesCanBeWon {
                 new PlayerOneScored()
         ).forEach(game::when);
 
-        Event e = inMemoryEventStore.readLast("set-" + arbitraryId);
+        Event e = inMemoryEventStore.readLast(Set.streamNameFor(matchId));
         assertThat(e).isInstanceOf(GamePlayerOne.class);
     }
 
@@ -40,7 +41,7 @@ public class GamesCanBeWon {
         String matchId = UUID.randomUUID().toString();
 
         final EventStore inMemoryEventStore = new FakeEventStore();
-        inMemoryEventStore.writeAll("games-" + matchId, ImmutableList.of(
+        inMemoryEventStore.writeAll(Game.streamNameFor(matchId), ImmutableList.of(
                 new PlayerOneScored(),
                 new PlayerOneScored(),
                 new PlayerOneScored(),
@@ -49,7 +50,7 @@ public class GamesCanBeWon {
 
         new Game(inMemoryEventStore, matchId);
 
-        Event e = inMemoryEventStore.readLast("set-" + matchId);
+        Event e = inMemoryEventStore.readLast(Set.streamNameFor(matchId));
         assertThat(e).isInstanceOf(GamePlayerOne.class);
     }
 
@@ -58,25 +59,25 @@ public class GamesCanBeWon {
         String matchId = UUID.randomUUID().toString();
 
         final EventStore inMemoryEventStore = new FakeEventStore();
-        inMemoryEventStore.writeAll("games-" + matchId, ImmutableList.of(
+        inMemoryEventStore.writeAll(Game.streamNameFor(matchId), ImmutableList.of(
                 new PlayerOneScored(),
                 new PlayerOneScored()
         ));
 
         new Game(inMemoryEventStore, matchId);
-        inMemoryEventStore.write("games-"+matchId, new PlayerOneScored());
-        inMemoryEventStore.write("games-"+matchId, new PlayerOneScored());
+        inMemoryEventStore.write(Game.streamNameFor(matchId), new PlayerOneScored());
+        inMemoryEventStore.write(Game.streamNameFor(matchId), new PlayerOneScored());
 
-        Event e = inMemoryEventStore.readLast("set-" + matchId);
+        Event e = inMemoryEventStore.readLast(Set.streamNameFor(matchId));
         assertThat(e).isInstanceOf(GamePlayerOne.class);
     }
 
     @Test
     public void playerTwoCanWinAGame() {
-        String arbitraryId = UUID.randomUUID().toString();
+        String matchId = UUID.randomUUID().toString();
 
         final FakeEventStore inMemoryEventStore = new FakeEventStore();
-        Game game = new Game(inMemoryEventStore, arbitraryId);
+        Game game = new Game(inMemoryEventStore, matchId);
 
         ImmutableList.of(
                 new PlayerTwoScored(),
@@ -85,7 +86,7 @@ public class GamesCanBeWon {
                 new PlayerTwoScored()
         ).forEach(game::when);
 
-        Event e = inMemoryEventStore.readLast("set-" + arbitraryId);
+        Event e = inMemoryEventStore.readLast(Set.streamNameFor(matchId));
         assertThat(e).isInstanceOf(GamePlayerTwo.class);
     }
 }

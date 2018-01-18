@@ -50,18 +50,16 @@ public class StandardGameIsScored {
                         {"Game player one", concat(threePointsEach, Arrays.asList(new PlayerOneScored(), new PlayerOneScored()))},
                         {"deuce", concat(threePointsEach, Arrays.asList(new PlayerOneScored(), new PlayerTwoScored()))},
                         {"Game player two", concat(threePointsEach, Arrays.asList(new PlayerOneScored(), new PlayerTwoScored(), new PlayerTwoScored(), new PlayerTwoScored()))},
-                // game stops processing events when somebody wins
-                        {"Game player one", Arrays.asList(
+                // game resets score if someone has won
+                        {"Game player two", Arrays.asList(
                                 new PlayerOneScored(),
                                 new PlayerOneScored(),
                                 new PlayerOneScored(),
                                 new PlayerOneScored(), //game is won
-                                new PlayerOneScored(),
-                                new PlayerOneScored(),
-                                new PlayerOneScored(),
-                                new PlayerOneScored(),
-                                new PlayerOneScored(),
-                                new PlayerOneScored())},
+                                new PlayerTwoScored(),
+                                new PlayerTwoScored(),
+                                new PlayerTwoScored(),
+                                new PlayerTwoScored())},
                 }
         );
     }

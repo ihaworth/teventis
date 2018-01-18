@@ -38,6 +38,17 @@ public class Set {
 
     private void updateScore() {
         score = String.format("%s-%s", gamesPlayerOne, gamesPlayerTwo);
+        checkForWin();
+    }
+
+    private void checkForWin() {
+        if (gamesPlayerOne >= 6) {
+            eventStore.write("match-"+matchId, new SetPlayerOne(score()));
+        }
+
+        if (gamesPlayerTwo >= 6) {
+            eventStore.write("match-"+matchId, new SetPlayerTwo(score()));
+        }
     }
 
     public String score() {
