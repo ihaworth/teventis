@@ -8,7 +8,6 @@ import java.util.function.Consumer;
 public interface EventStream {
     void addAll(List<Event> events);
 
-    List<Event> readAll();
     Event readLast();
 
     void write(Event e);

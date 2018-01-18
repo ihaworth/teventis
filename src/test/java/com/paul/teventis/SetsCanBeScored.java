@@ -30,7 +30,7 @@ public class SetsCanBeScored {
                         {"1-0", playerOneWinOneGame()},
                         {"0-1", playerTwoWinOneGame()},
                         {"2-0", playerOneWinTwoGames()},
-                {"0-2", playerTwoWinTwoGames()}
+                        {"0-2", playerTwoWinTwoGames()}
                 }
         );
     }

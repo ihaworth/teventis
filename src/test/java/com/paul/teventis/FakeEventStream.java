@@ -18,11 +18,6 @@ public class FakeEventStream implements EventStream {
     }
 
     @Override
-    public List<Event> readAll() {
-        return events;
-    }
-
-    @Override
     public Event readLast() {
         return events.get(events.size() - 1);
     }
