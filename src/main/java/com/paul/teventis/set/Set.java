@@ -42,11 +42,15 @@ public class Set {
     }
 
     private void checkForWin() {
-        if (gamesPlayerOne >= 6) {
+        final boolean playerOneHasWonEnoughGames = gamesPlayerOne >= 6;
+        final boolean playerTwoIsAtLeastTwoPointsBehind = gamesPlayerOne - gamesPlayerTwo >= 2;
+        if (playerOneHasWonEnoughGames && playerTwoIsAtLeastTwoPointsBehind) {
             eventStore.write("match-"+matchId, new SetPlayerOne(score()));
         }
 
-        if (gamesPlayerTwo >= 6) {
+        final boolean playerTwoHasEnoughPoints = gamesPlayerTwo >= 6;
+        final boolean playerOneIsAtLeastTwoPointsBehind = gamesPlayerTwo - gamesPlayerOne >= 2;
+        if (playerTwoHasEnoughPoints && playerOneIsAtLeastTwoPointsBehind) {
             eventStore.write("match-"+matchId, new SetPlayerTwo(score()));
         }
     }
