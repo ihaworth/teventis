@@ -1,106 +1,30 @@
 package com.paul.teventis;
 
-import com.google.common.collect.ImmutableList;
-import com.paul.teventis.events.*;
-import com.paul.teventis.game.PlayerOneScored;
-import com.paul.teventis.game.PlayerTwoScored;
 import com.paul.teventis.set.Set;
 import com.paul.teventis.set.SetScoreAnnounced;
 import com.paul.teventis.set.SetStarted;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(Parameterized.class)
 public class SetsCanBeScored {
 
-    private final String setScoreAnnounced;
-    private final List<Event> pointsScored;
-
-    @Parameterized.Parameters(name = "Set Scoring: {index}")
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                        {"0-0", ImmutableList.of(new SetStarted())},
-                        {"1-0", playerOneWinOneGame()},
-                        {"0-1", playerTwoWinOneGame()},
-                        {"2-0", playerOneWinTwoGames()},
-                        {"0-2", playerTwoWinTwoGames()}
-                }
-        );
-    }
-
-    private static Object playerOneWinOneGame() {
-        return ImmutableList.of(
-                new SetStarted(),
-                new PlayerOneScored(),
-                new PlayerOneScored(),
-                new PlayerOneScored(),
-                new PlayerOneScored()
-        );
-    }
-
-    private static Object playerTwoWinOneGame() {
-        return ImmutableList.of(
-                new SetStarted(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored()
-        );
-    }
-
-    private static Object playerOneWinTwoGames() {
-        return ImmutableList.of(
-                new SetStarted(),
-                new PlayerOneScored(),
-                new PlayerOneScored(),
-                new PlayerOneScored(),
-                new PlayerOneScored(),
-                new PlayerOneScored(),
-                new PlayerOneScored(),
-                new PlayerOneScored(),
-                new PlayerOneScored()
-        );
-    }
-
-    private static Object playerTwoWinTwoGames() {
-        return ImmutableList.of(
-                new SetStarted(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored(),
-                new PlayerTwoScored()
-        );
-    }
-
-    public SetsCanBeScored(String setScoreAnnounced, List<Event> pointsScored) {
-        this.setScoreAnnounced = setScoreAnnounced;
-        this.pointsScored = pointsScored;
-    }
-
     @Test
-    public void scoreIsAnnounced() {
-        final FakeEventStream inMemoryEventStream = new FakeEventStream();
-        inMemoryEventStream.addAll(pointsScored);
+    public void byReplayingASetWithNoActivity() {
+        String setId = UUID.randomUUID().toString();
+        String matchId = UUID.randomUUID().toString();
 
-        Set set = new Set(inMemoryEventStream);
-        pointsScored.forEach(set::when);
+        final FakeEventStore inMemoryEventStream = new FakeEventStore();
+        inMemoryEventStream.write("set-"+setId, new SetStarted(setId));
 
-        final SetScoreAnnounced scoreAnnounced = (SetScoreAnnounced) inMemoryEventStream.readLast();
+        Set set = new Set(inMemoryEventStream, matchId, setId);
 
-        assertThat(scoreAnnounced.toString()).isEqualTo(setScoreAnnounced);
+        final SetScoreAnnounced scoreAnnounced = (SetScoreAnnounced) inMemoryEventStream.readLast("match-" + matchId);
+
+        assertThat(scoreAnnounced.toString()).isEqualTo("0-0");
     }
-
 
 }
 

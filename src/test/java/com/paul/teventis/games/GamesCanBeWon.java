@@ -10,14 +10,18 @@ import com.paul.teventis.game.GamePlayerOne;
 import com.paul.teventis.game.GamePlayerTwo;
 import org.junit.Test;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GamesCanBeWon {
 
     @Test
     public void playerOneCanWinAGame() {
-        final FakeEventStream inMemoryEventStream = new FakeEventStream();
-        Game game = new Game(inMemoryEventStream);
+        String arbitraryId = UUID.randomUUID().toString();
+
+        final FakeEventStore inMemoryEventStream = new FakeEventStore();
+        Game game = new Game(inMemoryEventStream, arbitraryId);
 
         ImmutableList.of(
                 new PlayerOneScored(),
@@ -26,14 +30,16 @@ public class GamesCanBeWon {
                 new PlayerOneScored()
         ).forEach(game::when);
 
-        Event e = inMemoryEventStream.readLast();
+        Event e = inMemoryEventStream.readLast("set-" + arbitraryId);
         assertThat(e).isInstanceOf(GamePlayerOne.class);
     }
 
     @Test
     public void playerTwoCanWinAGame() {
-        final FakeEventStream inMemoryEventStream = new FakeEventStream();
-        Game game = new Game(inMemoryEventStream);
+        String arbitraryId = UUID.randomUUID().toString();
+
+        final FakeEventStore inMemoryEventStream = new FakeEventStore();
+        Game game = new Game(inMemoryEventStream, arbitraryId);
 
         ImmutableList.of(
                 new PlayerTwoScored(),
@@ -42,7 +48,7 @@ public class GamesCanBeWon {
                 new PlayerTwoScored()
         ).forEach(game::when);
 
-        Event e = inMemoryEventStream.readLast();
+        Event e = inMemoryEventStream.readLast("set-" + arbitraryId);
         assertThat(e).isInstanceOf(GamePlayerTwo.class);
     }
 }

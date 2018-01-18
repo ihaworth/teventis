@@ -1,15 +1,17 @@
 package com.paul.teventis.game;
 
 import com.paul.teventis.events.Event;
-import com.paul.teventis.events.EventStream;
+import com.paul.teventis.events.EventStore;
 
 public class Game {
 
-    private final EventStream eventStream;
+    private final EventStore eventStore;
+    private final String setId;
     private TennisScore tennisScore = new LoveAll();
 
-    public Game(final EventStream eventStream) {
-        this.eventStream = eventStream;
+    public Game(final EventStore eventStore, final String setId) {
+        this.eventStore = eventStore;
+        this.setId = setId;
     }
 
     public void when(Event e) {
@@ -24,11 +26,11 @@ public class Game {
         }
 
         if (GamePlayerOne.class.isInstance(tennisScore)) {
-            eventStream.write((GamePlayerOne) tennisScore);
+            eventStore.write("set-"+ setId, (GamePlayerOne) tennisScore);
         }
 
         if (GamePlayerTwo.class.isInstance(tennisScore)) {
-            eventStream.write((GamePlayerTwo) tennisScore);
+            eventStore.write("set-"+ setId, (GamePlayerTwo) tennisScore);
         }
     }
 
