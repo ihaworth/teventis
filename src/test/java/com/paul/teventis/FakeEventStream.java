@@ -4,9 +4,12 @@ import com.paul.teventis.events.Event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class FakeEventStream implements EventStream {
     private final List<Event> events = new ArrayList<>();
+
+    private Consumer<Event> eventConsumer = e -> {}; //no-op
 
     @Override
     public void addAll(final List<Event> events) {
@@ -26,5 +29,11 @@ public class FakeEventStream implements EventStream {
     @Override
     public void write(final Event e) {
         events.add(e);
+        eventConsumer.accept(e);
+    }
+
+    @Override
+    public void subscribe(final Consumer<Event> eventConsumer) {
+        this.eventConsumer = eventConsumer;
     }
 }

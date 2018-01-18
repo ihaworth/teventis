@@ -1,6 +1,5 @@
 package com.paul.teventis;
 
-import com.paul.teventis.events.Event;
 import com.paul.teventis.events.PlayerOneScored;
 import com.paul.teventis.events.PlayerTwoScored;
 

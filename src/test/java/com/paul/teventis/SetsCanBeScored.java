@@ -3,6 +3,7 @@ package com.paul.teventis;
 import com.google.common.collect.ImmutableList;
 import com.paul.teventis.events.Event;
 import com.paul.teventis.events.PlayerOneScored;
+import com.paul.teventis.events.PlayerTwoScored;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -22,14 +23,15 @@ public class SetsCanBeScored {
     @Parameterized.Parameters(name = "Set Scoring: {index}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                        {"0-0", ImmutableList.of()},
-//                        {"1-0", winOneGame()}
+                        {"0-0", ImmutableList.of(new SetStarted())},
+                        {"1-0", winOneGame()}
                 }
         );
     }
 
     private static Object winOneGame() {
         return ImmutableList.of(
+                new SetStarted(),
                 new PlayerOneScored(),
                 new PlayerOneScored(),
                 new PlayerOneScored(),
@@ -54,6 +56,11 @@ public class SetsCanBeScored {
 
         assertThat(scoreAnnounced.toString()).isEqualTo(setScoreAnnounced);
     }
+
+
+}
+
+class SetStarted implements Event {
 }
 
 class SetScoreAnnounced implements Event {
@@ -73,16 +80,30 @@ class SetScoreAnnounced implements Event {
 class Set {
 
     private final EventStream eventStream;
+    private String setScore = "0-0";
 
     Game game;
 
     public Set(final EventStream eventStream) {
         this.eventStream = eventStream;
-        eventStream.write(new SetScoreAnnounced("0-0"));
-        game = new Game(eventStream);
+
+        this.eventStream.subscribe(this::when);
     }
 
     void when(Event e) {
+        if (SetStarted.class.isInstance(e)) {
+            eventStream.write(new SetScoreAnnounced(setScore));
+            game = new Game(eventStream);
+        }
+        if (GamePlayerOne.class.isInstance(e)) {
+            setScore = "1-0";
+            eventStream.write(new SetScoreAnnounced(setScore));
+            game = new Game(eventStream);
+        }
 
+        if (PlayerOneScored.class.isInstance(e)
+                || PlayerTwoScored.class.isInstance(e)) {
+            game.when(e);
+        }
     }
 }

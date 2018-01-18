@@ -5,6 +5,10 @@ import com.paul.teventis.events.PlayerOneScored;
 import com.paul.teventis.events.PlayerTwoScored;
 
 public class GamePlayerOne implements TennisScore, Event {
+
+    public GamePlayerOne() {
+    }
+
     @Override
     public String toString() {
         return "Game player one";
