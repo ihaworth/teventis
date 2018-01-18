@@ -7,45 +7,40 @@ public class Set {
 
     private final EventStore eventStore;
     private final String matchId;
-    private final String setId;
+
     private int gamesPlayerOne = 0;
     private int gamesPlayerTwo = 0;
+    private String score = "0-0";
 
-    Game game;
-
-    public Set(final EventStore eventStore, String matchId, final String setId) {
+    public Set(final EventStore eventStore, String matchId) {
         this.eventStore = eventStore;
         this.matchId = matchId;
-        this.setId = setId;
 
-        this.eventStore.readAll("set-" + setId).forEach(this::when);
-
-        this.eventStore.subscribe("games-" + matchId, this::when);
+        final String stream = streamNameFor(matchId);
+        this.eventStore.readAll(stream).forEach(this::when);
+        this.eventStore.subscribe(stream, this::when);
     }
 
-    public void when(Event e) {
-        if (SetStarted.class.isInstance(e)) {
-            announceScore();
-            game = new Game(eventStore, setId);
-        }
+    public static String streamNameFor(String matchId) {
+        return "sets-" + matchId;
+    }
+
+    private void when(Event e) {
         if (GamePlayerOne.class.isInstance(e)) {
             gamesPlayerOne++;
-            announceScore();
-            game = new Game(eventStore, setId);
+            updateScore();
         }
         if (GamePlayerTwo.class.isInstance(e)) {
             gamesPlayerTwo++;
-            announceScore();
-            game = new Game(eventStore, setId);
-        }
-        if (PlayerOneScored.class.isInstance(e)
-                || PlayerTwoScored.class.isInstance(e)) {
-            game.when(e);
+            updateScore();
         }
     }
 
-    private void announceScore() {
-        String score = String.format("%s-%s", gamesPlayerOne, gamesPlayerTwo);
-        eventStore.write("match-" + matchId, new SetScoreAnnounced(score));
+    private void updateScore() {
+        score = String.format("%s-%s", gamesPlayerOne, gamesPlayerTwo);
+    }
+
+    public String score() {
+        return this.score;
     }
 }
