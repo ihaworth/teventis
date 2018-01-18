@@ -20,7 +20,7 @@ public class Set {
 
         this.eventStore.readAll("set-" + setId).forEach(this::when);
 
-        this.eventStore.subscribe(this::when);
+        this.eventStore.subscribe("games-" + matchId, this::when);
     }
 
     public void when(Event e) {

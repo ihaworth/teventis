@@ -6,12 +6,15 @@ import com.paul.teventis.events.EventStore;
 public class Game {
 
     private final EventStore eventStore;
-    private final String setId;
+    private final String matchId;
     private TennisScore tennisScore = new LoveAll();
 
-    public Game(final EventStore eventStore, final String setId) {
+    public Game(final EventStore eventStore, final String matchId) {
         this.eventStore = eventStore;
-        this.setId = setId;
+        this.matchId = matchId;
+
+        this.eventStore.readAll("games-"+matchId).forEach(this::when);
+        this.eventStore.subscribe("games-"+matchId, this::when);
     }
 
     public void when(Event e) {
@@ -21,16 +24,20 @@ public class Game {
 
         if (PlayerOneScored.class.isInstance(e)) {
             tennisScore = tennisScore.when((PlayerOneScored) e);
+            checkForGameWon();
         } else if (PlayerTwoScored.class.isInstance(e)) {
             tennisScore = tennisScore.when((PlayerTwoScored) e);
+            checkForGameWon();
         }
+    }
 
+    private void checkForGameWon() {
         if (GamePlayerOne.class.isInstance(tennisScore)) {
-            eventStore.write("set-"+ setId, (GamePlayerOne) tennisScore);
+            eventStore.write("set-"+ matchId, (GamePlayerOne) tennisScore);
         }
 
         if (GamePlayerTwo.class.isInstance(tennisScore)) {
-            eventStore.write("set-"+ setId, (GamePlayerTwo) tennisScore);
+            eventStore.write("set-"+ matchId, (GamePlayerTwo) tennisScore);
         }
     }
 
