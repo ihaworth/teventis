@@ -1,9 +1,7 @@
 package com.paul.teventis;
 
 import com.google.common.collect.ImmutableList;
-import com.paul.teventis.events.Event;
-import com.paul.teventis.events.PlayerOneScored;
-import com.paul.teventis.events.PlayerTwoScored;
+import com.paul.teventis.events.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -101,60 +99,3 @@ public class SetsCanBeScored {
 
 }
 
-class SetStarted implements Event {
-}
-
-class SetScoreAnnounced implements Event {
-    private final String score;
-
-    public SetScoreAnnounced(final String score) {
-
-        this.score = score;
-    }
-
-    @Override
-    public String toString() {
-        return score;
-    }
-}
-
-class Set {
-
-    private final EventStream eventStream;
-    private int gamesPlayerOne = 0;
-    private int gamesPlayerTwo = 0;
-
-    Game game;
-
-    public Set(final EventStream eventStream) {
-        this.eventStream = eventStream;
-
-        this.eventStream.subscribe(this::when);
-    }
-
-    void when(Event e) {
-        if (SetStarted.class.isInstance(e)) {
-            announceScore();
-            game = new Game(eventStream);
-        }
-        if (GamePlayerOne.class.isInstance(e)) {
-            gamesPlayerOne++;
-            announceScore();
-            game = new Game(eventStream);
-        }
-        if (GamePlayerTwo.class.isInstance(e)) {
-            gamesPlayerTwo++;
-            announceScore();
-            game = new Game(eventStream);
-        }
-        if (PlayerOneScored.class.isInstance(e)
-                || PlayerTwoScored.class.isInstance(e)) {
-            game.when(e);
-        }
-    }
-
-    private void announceScore() {
-        String score = String.format("%s-%s", gamesPlayerOne, gamesPlayerTwo);
-        eventStream.write(new SetScoreAnnounced(score));
-    }
-}
