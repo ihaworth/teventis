@@ -34,8 +34,8 @@ public class StandardGameIsScored {
     @Parameterized.Parameters(name = "Standard Game: {index}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
-                        {"love all", Collections.emptyList()},
-                        {"15-love", Collections.singletonList(new PlayerOneScored())},
+                        {"love all", ImmutableList.of()},
+                        {"15-love", ImmutableList.of(new PlayerOneScored())},
                         {"15-15", ImmutableList.of(new PlayerOneScored(), new PlayerTwoScored())},
                         {"30-love", ImmutableList.of(new PlayerOneScored(), new PlayerOneScored())},
                         {"30-15", ImmutableList.of(new PlayerOneScored(), new PlayerOneScored(), new PlayerTwoScored())},
@@ -46,7 +46,7 @@ public class StandardGameIsScored {
                         {"40-30", ImmutableList.of(new PlayerOneScored(), new PlayerOneScored(), new PlayerOneScored(), new PlayerTwoScored(), new PlayerTwoScored())},
                         {"Game player one", ImmutableList.of(new PlayerOneScored(), new PlayerOneScored(), new PlayerOneScored(), new PlayerTwoScored(), new PlayerTwoScored(), new PlayerOneScored())},
                         {"Game player one", ImmutableList.of(new PlayerOneScored(), new PlayerOneScored(), new PlayerOneScored(), new PlayerOneScored())},
-                        {"love-15", Collections.singletonList(new PlayerTwoScored())},
+                        {"love-15", ImmutableList.of(new PlayerTwoScored())},
                         {"15-15", ImmutableList.of(new PlayerTwoScored(), new PlayerOneScored())},
                         {"love-30", ImmutableList.of(new PlayerTwoScored(), new PlayerTwoScored())},
                         {"15-30", ImmutableList.of(new PlayerTwoScored(), new PlayerTwoScored(), new PlayerOneScored())},
@@ -65,8 +65,8 @@ public class StandardGameIsScored {
                         {"30-30", ImmutableList.of(new PlayerOneScored(), new PlayerTwoScored(), new PlayerOneScored(), new PlayerTwoScored())},
                         {"30-40", ImmutableList.of(new PlayerOneScored(), new PlayerTwoScored(), new PlayerOneScored(), new PlayerTwoScored(), new PlayerTwoScored())},
                         {"deuce", threePointsEach},
-                        {"advantage player one", concat(threePointsEach, Collections.singletonList(new PlayerOneScored()))},
-                        {"advantage player two", concat(threePointsEach, Collections.singletonList(new PlayerTwoScored()))},
+                        {"advantage player one", concat(threePointsEach, ImmutableList.of(new PlayerOneScored()))},
+                        {"advantage player two", concat(threePointsEach, ImmutableList.of(new PlayerTwoScored()))},
                         {"Game player two", concat(threePointsEach, ImmutableList.of(new PlayerTwoScored(), new PlayerTwoScored()))},
                         {"deuce", concat(threePointsEach, ImmutableList.of(new PlayerTwoScored(), new PlayerOneScored()))},
                         {"Game player one", concat(threePointsEach, ImmutableList.of(new PlayerOneScored(), new PlayerOneScored()))},
