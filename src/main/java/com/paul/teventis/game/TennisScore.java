@@ -26,6 +26,11 @@ abstract class PreDeuce implements TennisScore {
     }
 
     @Override
+    public TennisScore when(final PlayerOneScored e) {
+        return new Deuce();
+    }
+
+    @Override
     public String toString() {
         return playerOneScore + "-" + playerTwoScore;
     }
@@ -63,7 +68,6 @@ class FifteenForty extends PreDeuce {
 
 class ThirtyForty extends PreDeuce {
     public ThirtyForty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new Deuce();           }
     @Override     public TennisScore when(final PlayerTwoScored e) {         return new GamePlayerTwo();   }
 }
 
