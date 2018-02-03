@@ -49,14 +49,17 @@ class PreDeuce implements TennisScore {
 
     @Override
     public String toString() {
+        if (playerOneScore.equals("love") && playerTwoScore.equals("love"))
+            return "love all";
+
         return playerOneScore + "-" + playerTwoScore;
     }
 }
 
-class LoveAll implements TennisScore { 
-    @Override     public String toString() {         return "love all";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new PreDeuce("15", "love");     }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new PreDeuce("love", "15");     }
+class LoveAll extends PreDeuce {
+    public LoveAll() {
+        super("love", "love");
+    }
 }
 
 
