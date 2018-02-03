@@ -96,6 +96,10 @@ class LoveForty implements TennisScore {
     @Override     public TennisScore when(final PlayerTwoScored e) {         return new GamePlayerTwo();   }
 }
 
+
+/* DEUCE */
+
+
 class Deuce implements TennisScore {
     @Override   public String toString() {         return "deuce";     }
     @Override   public TennisScore when(final PlayerOneScored e) {           return new AdvantagePlayerOne();     }
@@ -113,4 +117,3 @@ class AdvantagePlayerTwo implements TennisScore {
     @Override   public TennisScore when(final PlayerTwoScored e) {           return new GamePlayerTwo();   }
     @Override   public TennisScore when(final PlayerOneScored e) {           return new Deuce();           }
 }
-
