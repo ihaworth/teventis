@@ -6,7 +6,7 @@ interface TennisScore {
     TennisScore when(PlayerTwoScored e);
 }
 
-abstract class PreDeuce implements TennisScore {
+class PreDeuce implements TennisScore {
 
     final String playerOneScore;
     final String playerTwoScore;
@@ -27,6 +27,11 @@ abstract class PreDeuce implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
+        return new Deuce();
+    }
+
+    @Override
+    public TennisScore when(final PlayerTwoScored e) {
         return new Deuce();
     }
 
@@ -80,7 +85,6 @@ class ThirtyThirty extends PreDeuce {
 class FortyThirty extends PreDeuce {
     public FortyThirty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new GamePlayerOne();   }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new Deuce();           }
 }
 
 class ThirtyFifteen extends PreDeuce {
