@@ -55,16 +55,8 @@ class PreDeuce implements TennisScore {
 
 class LoveAll implements TennisScore { 
     @Override     public String toString() {         return "love all";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenLove("15", "love");     }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new LoveFifteen("love", "15");     }
-}
-
-class FifteenLove extends PreDeuce {
-    public FifteenLove(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
-}
-
-class LoveFifteen extends PreDeuce {
-    public LoveFifteen(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new PreDeuce("15", "love");     }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new PreDeuce("love", "15");     }
 }
 
 
