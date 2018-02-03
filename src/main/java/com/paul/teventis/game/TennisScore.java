@@ -20,92 +20,118 @@ abstract class PreDeuce implements TennisScore {
 class LoveAll implements TennisScore { 
     @Override     public String toString() {         return "love all";     }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenLove("15", "love");     }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new LoveFifteen();     }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new LoveFifteen("love", "15");     }
 }
 
 class FifteenLove extends PreDeuce {
     public FifteenLove(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
 
     @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyLove();      }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FifteenFifteen();  }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyLove("30", "love");      }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FifteenFifteen("15", "15");  }
 }
 
-class FifteenFifteen implements TennisScore {
-    @Override     public String toString() {         return "15" + "-" + "15";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyFifteen();   }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FifteenThirty();   }
+class FifteenFifteen extends PreDeuce {
+    public FifteenFifteen(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyFifteen("30", "15");   }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FifteenThirty("15", "30");   }
 }
 
-class FifteenThirty implements TennisScore {
-    @Override     public String toString() {         return "15" + "-" + "30";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyThirty();    }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FifteenForty();    }
+class FifteenThirty extends PreDeuce {
+    public FifteenThirty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyThirty("30", "30");    }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FifteenForty("15", "40");    }
 }
 
-class FifteenForty implements TennisScore {
-    @Override     public String toString() {         return "15" + "-" + "40";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyForty();     }
+class FifteenForty extends PreDeuce {
+    public FifteenForty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyForty("30", "40");     }
     @Override     public TennisScore when(final PlayerTwoScored e) {         return new GamePlayerTwo();   }
 }
 
-class ThirtyForty implements TennisScore {
-    @Override     public String toString() {         return "30" + "-" + "40";     }
+class ThirtyForty extends PreDeuce {
+    public ThirtyForty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new Deuce();           }
     @Override     public TennisScore when(final PlayerTwoScored e) {         return new GamePlayerTwo();   }
 }
 
-class ThirtyThirty implements TennisScore {
-    @Override     public String toString() {         return "30" + "-" + "30";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new FortyThirty();     }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new ThirtyForty();     }
+class ThirtyThirty extends PreDeuce {
+    public ThirtyThirty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new FortyThirty("40", "30");     }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new ThirtyForty("30", "40");     }
 }
 
-class FortyThirty implements TennisScore {
-    @Override     public String toString() {         return "40" + "-" + "30";     }
+class FortyThirty extends PreDeuce {
+    public FortyThirty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new GamePlayerOne();   }
     @Override     public TennisScore when(final PlayerTwoScored e) {         return new Deuce();           }
 }
 
-class ThirtyFifteen implements TennisScore { 
-    @Override     public String toString() {         return "30" + "-" + "15";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new FortyFifteen();    }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new ThirtyThirty();    }
+class ThirtyFifteen extends PreDeuce {
+    public ThirtyFifteen(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new FortyFifteen("40", "15");    }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new ThirtyThirty("30", "30");    }
 }
 
-class FortyFifteen implements TennisScore {
-    @Override     public String toString() {         return "40" + "-" + "15";     }
+class FortyFifteen extends PreDeuce {
+    public FortyFifteen(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new GamePlayerOne();   }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FortyThirty();     }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FortyThirty("40", "30");     }
 }
 
-class ThirtyLove implements TennisScore { 
-    @Override     public String toString() {         return "30" + "-" + "love";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new FortyLove();       }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new ThirtyFifteen();   }
+class ThirtyLove extends PreDeuce {
+    public ThirtyLove(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new FortyLove("40", "love");       }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new ThirtyFifteen("30", "15");   }
 }
 
-class FortyLove implements TennisScore {
-    @Override     public String toString() {         return "40" + "-" + "love";     }
+class FortyLove extends PreDeuce {
+    public FortyLove(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new GamePlayerOne();   }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FortyFifteen();    }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new FortyFifteen("40", "15");    }
 }
 
-class LoveFifteen implements TennisScore { 
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenFifteen();  }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new LoveThirty();      }
-    @Override     public String toString() {         return "love" + "-" + "15";     }
+class LoveFifteen extends PreDeuce {
+    public LoveFifteen(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenFifteen("15", "15");  }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new LoveThirty("love", "30");      }
 }
 
-class LoveThirty implements TennisScore {
-    @Override     public String toString() {         return "love" + "-" + "30";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenThirty();   }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new LoveForty();       }
+class LoveThirty extends PreDeuce {
+    public LoveThirty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenThirty("15", "30");   }
+    @Override     public TennisScore when(final PlayerTwoScored e) {         return new LoveForty("love", "40");       }
 }
 
-class LoveForty implements TennisScore {
-    @Override     public String toString() {         return "love" + "-" + "40";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenForty();    }
+class LoveForty extends PreDeuce {
+    public LoveForty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenForty("15", "40");    }
     @Override     public TennisScore when(final PlayerTwoScored e) {         return new GamePlayerTwo();   }
 }
 
