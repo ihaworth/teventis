@@ -6,14 +6,27 @@ interface TennisScore {
     TennisScore when(PlayerTwoScored e);
 }
 
+abstract class PreDeuce implements TennisScore {
+
+    final String playerOneScore;
+    final String playerTwoScore;
+
+    public PreDeuce(String playerOneScore, String playerTwoScore) {
+        this.playerOneScore = playerOneScore;
+        this.playerTwoScore = playerTwoScore;
+    }
+}
+
 class LoveAll implements TennisScore { 
     @Override     public String toString() {         return "love all";     }
-    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenLove();     }
+    @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenLove("15", "love");     }
     @Override     public TennisScore when(final PlayerTwoScored e) {         return new LoveFifteen();     }
 }
 
-class FifteenLove implements TennisScore {
-    @Override     public String toString() {         return "15" + "-" + "love";     }
+class FifteenLove extends PreDeuce {
+    public FifteenLove(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
+
+    @Override     public String toString() {         return playerOneScore + "-" + playerTwoScore;     }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyLove();      }
     @Override     public TennisScore when(final PlayerTwoScored e) {         return new FifteenFifteen();  }
 }
