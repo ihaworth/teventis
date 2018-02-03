@@ -98,19 +98,19 @@ class LoveForty implements TennisScore {
 
 class Deuce implements TennisScore {
     @Override   public String toString() {         return "deuce";     }
-    @Override   public AdvantagePlayerOne when(final PlayerOneScored e) {         return new AdvantagePlayerOne();     }
-    @Override   public AdvantagePlayerTwo when(final PlayerTwoScored playerTwoScored) {         return new AdvantagePlayerTwo();     }
+    @Override   public TennisScore when(final PlayerOneScored e) {           return new AdvantagePlayerOne();     }
+    @Override   public TennisScore when(final PlayerTwoScored e) {           return new AdvantagePlayerTwo();     }
 }
 
 class AdvantagePlayerOne implements TennisScore {
     @Override   public String toString() {         return "advantage player one";     }
-    @Override   public GamePlayerOne when(final PlayerOneScored e) {         return new GamePlayerOne();     }
-    @Override   public Deuce when(final PlayerTwoScored e) {         return new Deuce();     }
+    @Override   public TennisScore when(final PlayerOneScored e) {           return new GamePlayerOne();   }
+    @Override   public TennisScore when(final PlayerTwoScored e) {           return new Deuce();           }
 }
 
 class AdvantagePlayerTwo implements TennisScore {
     @Override   public String toString() {         return "advantage player two";     }
-    @Override   public GamePlayerTwo when(final PlayerTwoScored e) {         return new GamePlayerTwo();     }
-    @Override   public Deuce when(final PlayerOneScored e) {         return new Deuce();     }
+    @Override   public TennisScore when(final PlayerTwoScored e) {           return new GamePlayerTwo();   }
+    @Override   public TennisScore when(final PlayerOneScored e) {           return new Deuce();           }
 }
 
