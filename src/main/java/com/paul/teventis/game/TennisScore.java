@@ -35,6 +35,9 @@ class PreDeuce implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
+        if (playerTwoScore.equals("40"))
+            return new GamePlayerTwo();
+
         return new Deuce();
     }
 
@@ -71,12 +74,10 @@ class FifteenThirty extends PreDeuce {
 class FifteenForty extends PreDeuce {
     public FifteenForty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new ThirtyForty(nextScore(playerOneScore), playerTwoScore);     }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new GamePlayerTwo();   }
 }
 
 class ThirtyForty extends PreDeuce {
     public ThirtyForty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new GamePlayerTwo();   }
 }
 
 class ThirtyThirty extends PreDeuce {
@@ -126,7 +127,6 @@ class LoveThirty extends PreDeuce {
 class LoveForty extends PreDeuce {
     public LoveForty(String playerOneScore, String playerTwoScore) { super(playerOneScore, playerTwoScore); }
     @Override     public TennisScore when(final PlayerOneScored e) {         return new FifteenForty(nextScore(playerOneScore), playerTwoScore);    }
-    @Override     public TennisScore when(final PlayerTwoScored e) {         return new GamePlayerTwo();   }
 }
 
 
