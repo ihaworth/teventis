@@ -36,8 +36,8 @@ class PreDeuce implements TennisScore {
         return nextTennisScore(playerOneScore, nextScore(playerTwoScore));
     }
 
-    private TennisScore nextTennisScore(String playerOneScore, String playerTwoScore) {
-        PreDeuce nextScore = new PreDeuce(playerOneScore, playerTwoScore);
+    private TennisScore nextTennisScore(String nextPlayerOneScore, String nextPlayerTwoScore) {
+        PreDeuce nextScore = new PreDeuce(nextPlayerOneScore, nextPlayerTwoScore);
 
         if (nextScore.playerOneWon())
             return new GamePlayerOne();
