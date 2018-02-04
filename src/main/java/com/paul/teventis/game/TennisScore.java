@@ -30,10 +30,12 @@ class PreDeuce implements TennisScore {
         if (playerOneScore.equals("40"))
             return new GamePlayerOne();
 
-        if (nextScore(playerOneScore).equals("40") && playerTwoScore.equals("40"))
+        PreDeuce nextScore = new PreDeuce(nextScore(playerOneScore), playerTwoScore);
+
+        if (nextScore.isDeuce())
             return new Deuce();
 
-        return new PreDeuce(nextScore(playerOneScore), playerTwoScore);
+        return nextScore;
     }
 
     @Override
@@ -41,10 +43,16 @@ class PreDeuce implements TennisScore {
         if (playerTwoScore.equals("40"))
             return new GamePlayerTwo();
 
-        if (playerOneScore.equals("40") && nextScore(playerTwoScore).equals("40"))
+        PreDeuce nextScore = new PreDeuce(playerOneScore, nextScore(playerTwoScore));
+
+        if (nextScore.isDeuce())
             return new Deuce();
 
-        return new PreDeuce(playerOneScore, nextScore(playerTwoScore));
+        return nextScore;
+    }
+
+    private boolean isDeuce() {
+        return this.playerOneScore.equals("40") && this.playerTwoScore.equals("40");
     }
 
     @Override
