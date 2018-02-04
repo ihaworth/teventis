@@ -21,16 +21,20 @@ class PreDeuce implements TennisScore {
             case "love": return "15";
             case   "15": return "30";
             case   "30": return "40";
+            case   "40": return "won";
         }
         throw new IllegalArgumentException(score);
     }
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        if (playerOneScore.equals("40"))
-            return new GamePlayerOne();
 
-        PreDeuce nextScore = new PreDeuce(nextScore(playerOneScore), playerTwoScore);
+        String playerOneScore = nextScore(this.playerOneScore);
+
+        PreDeuce nextScore = new PreDeuce(playerOneScore, playerTwoScore);
+
+        if (playerOneScore.equals("won"))
+            return new GamePlayerOne();
 
         if (nextScore.isDeuce())
             return new Deuce();
@@ -40,10 +44,13 @@ class PreDeuce implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        if (playerTwoScore.equals("40"))
-            return new GamePlayerTwo();
 
-        PreDeuce nextScore = new PreDeuce(playerOneScore, nextScore(playerTwoScore));
+        String playerTwoScore = nextScore(this.playerTwoScore);
+
+        PreDeuce nextScore = new PreDeuce(playerOneScore, playerTwoScore);
+
+        if (playerTwoScore.equals("won"))
+            return new GamePlayerTwo();
 
         if (nextScore.isDeuce())
             return new Deuce();
