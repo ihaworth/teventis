@@ -30,6 +30,7 @@ class PreDeuce implements TennisScore {
     public TennisScore when(final PlayerOneScored e) {
 
         String playerOneScore = nextScore(this.playerOneScore);
+        String playerTwoScore = this.playerTwoScore;
 
         PreDeuce nextScore = new PreDeuce(playerOneScore, playerTwoScore);
 
@@ -48,6 +49,7 @@ class PreDeuce implements TennisScore {
     @Override
     public TennisScore when(final PlayerTwoScored e) {
 
+        String playerOneScore = this.playerOneScore;
         String playerTwoScore = nextScore(this.playerTwoScore);
 
         PreDeuce nextScore = new PreDeuce(playerOneScore, playerTwoScore);
