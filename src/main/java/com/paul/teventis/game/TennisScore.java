@@ -33,7 +33,7 @@ class PreDeuce implements TennisScore {
 
         PreDeuce nextScore = new PreDeuce(playerOneScore, playerTwoScore);
 
-        if (playerOneScore.equals("won"))
+        if (nextScore.playerOneWon())
             return new GamePlayerOne();
 
         if (nextScore.isDeuce())
@@ -49,13 +49,21 @@ class PreDeuce implements TennisScore {
 
         PreDeuce nextScore = new PreDeuce(playerOneScore, playerTwoScore);
 
-        if (playerTwoScore.equals("won"))
+        if (nextScore.playerTwoWon())
             return new GamePlayerTwo();
 
         if (nextScore.isDeuce())
             return new Deuce();
 
         return nextScore;
+    }
+
+    private boolean playerOneWon() {
+        return playerOneScore.equals("won");
+    }
+
+    private boolean playerTwoWon() {
+        return playerTwoScore.equals("won");
     }
 
     private boolean isDeuce() {
