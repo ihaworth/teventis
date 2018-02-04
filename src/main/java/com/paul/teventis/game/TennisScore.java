@@ -16,16 +16,6 @@ class PreDeuce implements TennisScore {
         this.playerTwoScore = playerTwoScore;
     }
 
-    public String nextScore(String score) {
-        switch (score) {
-            case "love": return "15";
-            case   "15": return "30";
-            case   "30": return "40";
-            case   "40": return "won";
-        }
-        throw new IllegalArgumentException(score);
-    }
-
     @Override
     public TennisScore when(final PlayerOneScored e) {
         return nextTennisScore(nextScore(playerOneScore), playerTwoScore);
@@ -34,6 +24,16 @@ class PreDeuce implements TennisScore {
     @Override
     public TennisScore when(final PlayerTwoScored e) {
         return nextTennisScore(playerOneScore, nextScore(playerTwoScore));
+    }
+
+    public String nextScore(String score) {
+        switch (score) {
+            case "love": return "15";
+            case   "15": return "30";
+            case   "30": return "40";
+            case   "40": return "won";
+        }
+        throw new IllegalArgumentException(score);
     }
 
     private TennisScore nextTennisScore(String nextPlayerOneScore, String nextPlayerTwoScore) {
