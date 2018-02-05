@@ -8,17 +8,17 @@ interface TennisScore {
     TennisScore when(PlayerTwoScored e);
 }
 
-class PlayerScore {
+enum PlayerScore {
 
-    public static final PlayerScore SCORE_FIFTEEN = new PlayerScore("15");
-    public static final PlayerScore SCORE_THIRTY  = new PlayerScore("30");
-    public static final PlayerScore SCORE_FORTY   = new PlayerScore("40");
-    public static final PlayerScore SCORE_WON     = new PlayerScore("won");
-    public static final PlayerScore SCORE_LOVE    = new PlayerScore("love");
+    SCORE_FIFTEEN("15"  ),
+    SCORE_THIRTY ("30"  ),
+    SCORE_FORTY  ("40"  ),
+    SCORE_WON    ("won" ),
+    SCORE_LOVE   ("love");
 
     private String score;
 
-    public PlayerScore(String score) {
+    PlayerScore(String score) {
         this.score = score;
     }
 
