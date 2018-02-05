@@ -1,5 +1,7 @@
 package com.paul.teventis.game;
 
+import static com.paul.teventis.game.PlayerScore.*;
+
 interface TennisScore {
 
     TennisScore when(PlayerOneScored e);
@@ -8,6 +10,11 @@ interface TennisScore {
 
 class PlayerScore {
 
+    public static final PlayerScore SCORE_FIFTEEN = new PlayerScore("15");
+    public static final PlayerScore SCORE_THIRTY  = new PlayerScore("30");
+    public static final PlayerScore SCORE_FORTY   = new PlayerScore("40");
+    public static final PlayerScore SCORE_WON     = new PlayerScore("won");
+    public static final PlayerScore SCORE_LOVE    = new PlayerScore("love");
 
     private String score;
 
@@ -21,12 +28,6 @@ class PlayerScore {
 }
 
 class PreDeuce implements TennisScore {
-
-    public static final PlayerScore SCORE_FIFTEEN = new PlayerScore("15");
-    public static final PlayerScore SCORE_THIRTY  = new PlayerScore("30");
-    public static final PlayerScore SCORE_FORTY   = new PlayerScore("40");
-    public static final PlayerScore SCORE_WON     = new PlayerScore("won");
-    public static final PlayerScore SCORE_LOVE    = new PlayerScore("love");
 
     final String playerOneScore;
     final String playerTwoScore;
