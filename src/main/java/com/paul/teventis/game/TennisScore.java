@@ -39,22 +39,22 @@ enum PlayerScore {
 
 class PreDeuce implements TennisScore {
 
-    private final PlayerScore playerOneScore;
-    private final PlayerScore playerTwoScore;
+    private final PlayerScore playerOne;
+    private final PlayerScore playerTwo;
 
-    public PreDeuce(PlayerScore playerOneScore, PlayerScore playerTwoScore) {
-        this.playerOneScore = playerOneScore;
-        this.playerTwoScore = playerTwoScore;
+    public PreDeuce(PlayerScore playerOne, PlayerScore playerTwo) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
     }
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return nextTennisScore(playerOneScore.next(), playerTwoScore);
+        return nextTennisScore(playerOne.next(), playerTwo);
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return nextTennisScore(playerOneScore, playerTwoScore.next());
+        return nextTennisScore(playerOne, playerTwo.next());
     }
 
     private TennisScore nextTennisScore(PlayerScore playerOneScore, PlayerScore playerTwoScore) {
@@ -75,11 +75,11 @@ class PreDeuce implements TennisScore {
     }
 
     private boolean playerOneWon() {
-        return playerOneScore == WON;
+        return playerOne == WON;
     }
 
     private boolean playerTwoWon() {
-        return playerTwoScore == WON;
+        return playerTwo == WON;
     }
 
     private boolean isDeuce() {
@@ -91,12 +91,12 @@ class PreDeuce implements TennisScore {
         if (bothScore(LOVE))
             return "love all";
 
-        return playerOneScore.getScore() + "-" + playerTwoScore.getScore();
+        return playerOne.getScore() + "-" + playerTwo.getScore();
     }
 
     private boolean bothScore(PlayerScore score) {
-        return playerOneScore == score &&
-               playerTwoScore == score;
+        return playerOne == score &&
+               playerTwo == score;
     }
 }
 
