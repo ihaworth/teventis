@@ -25,6 +25,16 @@ enum PlayerScore {
     public String getScore() {
         return score;
     }
+
+    PlayerScore next() {
+        switch (this) {
+            case LOVE   : return FIFTEEN;
+            case FIFTEEN: return THIRTY;
+            case THIRTY : return FORTY;
+            case FORTY  : return WON;
+        }
+        throw new IllegalArgumentException(getScore());
+    }
 }
 
 class PreDeuce implements TennisScore {
@@ -39,26 +49,12 @@ class PreDeuce implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return nextTennisScore(nextScore(playerOneScore), playerTwoScore);
+        return nextTennisScore(playerOneScore.next(), playerTwoScore);
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return nextTennisScore(playerOneScore, nextScore(playerTwoScore));
-    }
-
-    private PlayerScore nextScore(PlayerScore playerScore) {
-        return nextScore(playerScore.getScore());
-    }
-
-    private PlayerScore nextScore(String score) {
-        switch (score) {
-            case "love": return FIFTEEN;
-            case   "15": return THIRTY;
-            case   "30": return FORTY;
-            case   "40": return WON;
-        }
-        throw new IllegalArgumentException(score);
+        return nextTennisScore(playerOneScore, playerTwoScore.next());
     }
 
     private TennisScore nextTennisScore(PlayerScore playerOneScore, PlayerScore playerTwoScore) {
