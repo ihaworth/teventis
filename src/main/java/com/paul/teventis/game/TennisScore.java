@@ -36,12 +36,12 @@ class PreDeuce implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return nextTennisScore(nextScore(playerOneScore), playerTwoScore);
+        return nextTennisScore(new PlayerScore(nextScore(playerOneScore)), new PlayerScore(playerTwoScore));
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return nextTennisScore(playerOneScore, nextScore(playerTwoScore));
+        return nextTennisScore(new PlayerScore(playerOneScore), new PlayerScore(nextScore(playerTwoScore)));
     }
 
     public String nextScore(String score) {
@@ -54,8 +54,8 @@ class PreDeuce implements TennisScore {
         throw new IllegalArgumentException(score);
     }
 
-    private TennisScore nextTennisScore(String nextPlayerOneScore, String nextPlayerTwoScore) {
-        return new PreDeuce(new PlayerScore(nextPlayerOneScore), new PlayerScore(nextPlayerTwoScore)).bestRepresentation();
+    private TennisScore nextTennisScore(PlayerScore playerOneScore, PlayerScore playerTwoScore) {
+        return new PreDeuce(playerOneScore, playerTwoScore).bestRepresentation();
     }
 
     private TennisScore bestRepresentation() {
