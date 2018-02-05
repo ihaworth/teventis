@@ -84,23 +84,23 @@ class PreDeuce implements TennisScore {
     }
 
     private boolean playerOneWon() {
-        return playerOneScore.equals(WON);
+        return playerOneScore1.equals(SCORE_WON);
     }
 
     private boolean playerTwoWon() {
-        return playerTwoScore.equals(WON);
+        return playerTwoScore1.equals(SCORE_WON);
     }
 
     private boolean isDeuce() {
-        return playerOneScore.equals(FORTY) && playerTwoScore.equals(FORTY);
+        return playerOneScore1.equals(SCORE_FORTY) && playerTwoScore1.equals(SCORE_FORTY);
     }
 
     @Override
     public String toString() {
-        if (playerOneScore.equals(LOVE) && playerTwoScore.equals(LOVE))
+        if (playerOneScore1.equals(SCORE_LOVE) && playerTwoScore1.equals(SCORE_LOVE))
             return "love all";
 
-        return playerOneScore + "-" + playerTwoScore;
+        return playerOneScore1.getScore() + "-" + playerTwoScore1.getScore();
     }
 }
 
