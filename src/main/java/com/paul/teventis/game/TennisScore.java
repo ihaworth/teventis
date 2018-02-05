@@ -8,6 +8,12 @@ interface TennisScore {
 
 class PreDeuce implements TennisScore {
 
+            static final String LOVE    = "love";
+    private static final String FIFTEEN = "15";
+    private static final String THIRTY  = "30";
+    private static final String FORTY   = "40";
+    private static final String WON     = "won";
+
     final String playerOneScore;
     final String playerTwoScore;
 
@@ -28,10 +34,10 @@ class PreDeuce implements TennisScore {
 
     public String nextScore(String score) {
         switch (score) {
-            case "love": return "15";
-            case   "15": return "30";
-            case   "30": return "40";
-            case   "40": return "won";
+            case    LOVE: return FIFTEEN;
+            case FIFTEEN: return THIRTY;
+            case  THIRTY: return FORTY;
+            case   FORTY: return WON;
         }
         throw new IllegalArgumentException(score);
     }
@@ -54,20 +60,20 @@ class PreDeuce implements TennisScore {
     }
 
     private boolean playerOneWon() {
-        return playerOneScore.equals("won");
+        return playerOneScore.equals(WON);
     }
 
     private boolean playerTwoWon() {
-        return playerTwoScore.equals("won");
+        return playerTwoScore.equals(WON);
     }
 
     private boolean isDeuce() {
-        return playerOneScore.equals("40") && playerTwoScore.equals("40");
+        return playerOneScore.equals(FORTY) && playerTwoScore.equals(FORTY);
     }
 
     @Override
     public String toString() {
-        if (playerOneScore.equals("love") && playerTwoScore.equals("love"))
+        if (playerOneScore.equals(LOVE) && playerTwoScore.equals(LOVE))
             return "love all";
 
         return playerOneScore + "-" + playerTwoScore;
@@ -76,7 +82,7 @@ class PreDeuce implements TennisScore {
 
 class LoveAll extends PreDeuce {
     public LoveAll() {
-        super("love", "love");
+        super(LOVE, LOVE);
     }
 }
 
