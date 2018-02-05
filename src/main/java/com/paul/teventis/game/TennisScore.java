@@ -37,18 +37,20 @@ class PreDeuce implements TennisScore {
     }
 
     private TennisScore nextTennisScore(String nextPlayerOneScore, String nextPlayerTwoScore) {
-        PreDeuce nextScore = new PreDeuce(nextPlayerOneScore, nextPlayerTwoScore);
+        return new PreDeuce(nextPlayerOneScore, nextPlayerTwoScore).bestRepresentation();
+    }
 
-        if (nextScore.playerOneWon())
+    private TennisScore bestRepresentation() {
+        if (playerOneWon())
             return new GamePlayerOne();
 
-        if (nextScore.playerTwoWon())
+        if (playerTwoWon())
             return new GamePlayerTwo();
 
-        if (nextScore.isDeuce())
+        if (isDeuce())
             return new Deuce();
 
-        return nextScore;
+        return this;
     }
 
     private boolean playerOneWon() {
