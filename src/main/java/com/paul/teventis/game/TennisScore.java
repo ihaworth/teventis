@@ -6,6 +6,18 @@ interface TennisScore {
     TennisScore when(PlayerTwoScored e);
 }
 
+class PlayerScore {
+    private String score;
+
+    public PlayerScore(String score) {
+        this.score = score;
+    }
+
+    public String getScore() {
+        return score;
+    }
+}
+
 class PreDeuce implements TennisScore {
 
             static final String LOVE    = "love";
@@ -18,8 +30,8 @@ class PreDeuce implements TennisScore {
     final String playerTwoScore;
 
     public PreDeuce(String playerOneScore, String playerTwoScore) {
-        this.playerOneScore = playerOneScore;
-        this.playerTwoScore = playerTwoScore;
+        this.playerOneScore = new PlayerScore(playerOneScore).getScore();
+        this.playerTwoScore = new PlayerScore(playerTwoScore).getScore();
     }
 
     @Override
