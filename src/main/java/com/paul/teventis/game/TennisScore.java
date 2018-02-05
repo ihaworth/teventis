@@ -29,22 +29,22 @@ class PlayerScore {
 
 class PreDeuce implements TennisScore {
 
-    private final PlayerScore playerOneScore1;
-    private final PlayerScore playerTwoScore1;
+    private final PlayerScore playerOneScore;
+    private final PlayerScore playerTwoScore;
 
     public PreDeuce(PlayerScore playerOneScore, PlayerScore playerTwoScore) {
-        playerOneScore1 = playerOneScore;
-        playerTwoScore1 = playerTwoScore;
+        this.playerOneScore = playerOneScore;
+        this.playerTwoScore = playerTwoScore;
     }
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return nextTennisScore(nextScore(playerOneScore1.getScore()), playerTwoScore1);
+        return nextTennisScore(nextScore(playerOneScore.getScore()), playerTwoScore);
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return nextTennisScore(playerOneScore1, nextScore(playerTwoScore1.getScore()));
+        return nextTennisScore(playerOneScore, nextScore(playerTwoScore.getScore()));
     }
 
     private PlayerScore nextScore(String score) {
@@ -75,23 +75,23 @@ class PreDeuce implements TennisScore {
     }
 
     private boolean playerOneWon() {
-        return playerOneScore1.equals(SCORE_WON);
+        return playerOneScore.equals(SCORE_WON);
     }
 
     private boolean playerTwoWon() {
-        return playerTwoScore1.equals(SCORE_WON);
+        return playerTwoScore.equals(SCORE_WON);
     }
 
     private boolean isDeuce() {
-        return playerOneScore1.equals(SCORE_FORTY) && playerTwoScore1.equals(SCORE_FORTY);
+        return playerOneScore.equals(SCORE_FORTY) && playerTwoScore.equals(SCORE_FORTY);
     }
 
     @Override
     public String toString() {
-        if (playerOneScore1.equals(SCORE_LOVE) && playerTwoScore1.equals(SCORE_LOVE))
+        if (playerOneScore.equals(SCORE_LOVE) && playerTwoScore.equals(SCORE_LOVE))
             return "love all";
 
-        return playerOneScore1.getScore() + "-" + playerTwoScore1.getScore();
+        return playerOneScore.getScore() + "-" + playerTwoScore.getScore();
     }
 }
 
