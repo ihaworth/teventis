@@ -22,17 +22,11 @@ class PlayerScore {
 
 class PreDeuce implements TennisScore {
 
-            static final String LOVE    = "love";
-    private static final String FIFTEEN = "15";
-    private static final String THIRTY  = "30";
-    private static final String FORTY   = "40";
-    private static final String WON     = "won";
-
-    public static final PlayerScore SCORE_FIFTEEN = new PlayerScore(FIFTEEN);
-    public static final PlayerScore SCORE_THIRTY  = new PlayerScore(THIRTY);
-    public static final PlayerScore SCORE_FORTY   = new PlayerScore(FORTY);
-    public static final PlayerScore SCORE_WON     = new PlayerScore(WON);
-    public static final PlayerScore SCORE_LOVE    = new PlayerScore(LOVE);
+    public static final PlayerScore SCORE_FIFTEEN = new PlayerScore("15");
+    public static final PlayerScore SCORE_THIRTY  = new PlayerScore("30");
+    public static final PlayerScore SCORE_FORTY   = new PlayerScore("40");
+    public static final PlayerScore SCORE_WON     = new PlayerScore("won");
+    public static final PlayerScore SCORE_LOVE    = new PlayerScore("love");
 
     final String playerOneScore;
     final String playerTwoScore;
@@ -58,10 +52,10 @@ class PreDeuce implements TennisScore {
 
     private PlayerScore nextScore(String score) {
         switch (score) {
-            case    LOVE: return SCORE_FIFTEEN;
-            case FIFTEEN: return SCORE_THIRTY;
-            case  THIRTY: return SCORE_FORTY;
-            case   FORTY: return SCORE_WON;
+            case "love": return SCORE_FIFTEEN;
+            case "15": return SCORE_THIRTY;
+            case "30": return SCORE_FORTY;
+            case "40": return SCORE_WON;
         }
         throw new IllegalArgumentException(score);
     }
