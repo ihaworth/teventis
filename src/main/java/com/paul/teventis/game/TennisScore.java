@@ -1,6 +1,6 @@
 package com.paul.teventis.game;
 
-import static com.paul.teventis.game.PlayerScore.*;
+import static com.paul.teventis.game.Score.*;
 
 interface TennisScore {
 
@@ -8,7 +8,7 @@ interface TennisScore {
     TennisScore when(PlayerTwoScored e);
 }
 
-enum PlayerScore {
+enum Score {
 
     LOVE   ("love"),
     FIFTEEN("15"  ),
@@ -18,7 +18,7 @@ enum PlayerScore {
 
     private String score;
 
-    PlayerScore(String score) {
+    Score(String score) {
         this.score = score;
     }
 
@@ -26,7 +26,7 @@ enum PlayerScore {
         return score;
     }
 
-    PlayerScore next() {
+    Score next() {
         switch (this) {
             case LOVE   : return FIFTEEN;
             case FIFTEEN: return THIRTY;
@@ -39,10 +39,10 @@ enum PlayerScore {
 
 class PreDeuce implements TennisScore {
 
-    private final PlayerScore playerOne;
-    private final PlayerScore playerTwo;
+    private final Score playerOne;
+    private final Score playerTwo;
 
-    public PreDeuce(PlayerScore playerOne, PlayerScore playerTwo) {
+    public PreDeuce(Score playerOne, Score playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
     }
@@ -57,7 +57,7 @@ class PreDeuce implements TennisScore {
         return nextTennisScore(playerOne, playerTwo.next());
     }
 
-    private TennisScore nextTennisScore(PlayerScore playerOneScore, PlayerScore playerTwoScore) {
+    private TennisScore nextTennisScore(Score playerOneScore, Score playerTwoScore) {
         return new PreDeuce(playerOneScore, playerTwoScore).bestRepresentation();
     }
 
@@ -82,7 +82,7 @@ class PreDeuce implements TennisScore {
         return playerOne.getScore() + "-" + playerTwo.getScore();
     }
 
-    private boolean bothScore(PlayerScore score) {
+    private boolean bothScore(Score score) {
         return playerOne == score &&
                playerTwo == score;
     }
