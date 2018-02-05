@@ -40,20 +40,20 @@ class PreDeuce implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return nextTennisScore(new PlayerScore(nextScore(playerOneScore)), playerTwoScore1);
+        return nextTennisScore(nextScore(playerOneScore), playerTwoScore1);
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return nextTennisScore(playerOneScore1, new PlayerScore(nextScore(playerTwoScore)));
+        return nextTennisScore(playerOneScore1, nextScore(playerTwoScore));
     }
 
-    public String nextScore(String score) {
+    private PlayerScore nextScore(String score) {
         switch (score) {
-            case    LOVE: return FIFTEEN;
-            case FIFTEEN: return THIRTY;
-            case  THIRTY: return FORTY;
-            case   FORTY: return WON;
+            case    LOVE: return new PlayerScore(FIFTEEN);
+            case FIFTEEN: return new PlayerScore(THIRTY );
+            case  THIRTY: return new PlayerScore(FORTY  );
+            case   FORTY: return new PlayerScore(WON    );
         }
         throw new IllegalArgumentException(score);
     }
