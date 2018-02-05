@@ -49,15 +49,15 @@ class PreDeuce implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return nextTennisScore(playerOne.next(), playerTwo);
+        return tennisScore(playerOne.next(), playerTwo);
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return nextTennisScore(playerOne, playerTwo.next());
+        return tennisScore(playerOne, playerTwo.next());
     }
 
-    private TennisScore nextTennisScore(Score playerOne, Score playerTwo) {
+    private TennisScore tennisScore(Score playerOne, Score playerTwo) {
         return new PreDeuce(playerOne, playerTwo).bestRepresentation();
     }
 
