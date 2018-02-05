@@ -28,10 +28,14 @@ class PreDeuce implements TennisScore {
 
     final String playerOneScore;
     final String playerTwoScore;
+    private final PlayerScore playerOneScore1;
+    private final PlayerScore playerTwoScore1;
 
     public PreDeuce(PlayerScore playerOneScore, PlayerScore playerTwoScore) {
-        this.playerOneScore = playerOneScore.getScore();
-        this.playerTwoScore = playerTwoScore.getScore();
+        playerOneScore1 = playerOneScore;
+        playerTwoScore1 = playerTwoScore;
+        this.playerOneScore = playerOneScore1.getScore();
+        this.playerTwoScore = playerTwoScore1.getScore();
     }
 
     @Override
