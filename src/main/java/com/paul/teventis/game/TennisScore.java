@@ -29,9 +29,9 @@ class PreDeuce implements TennisScore {
     final String playerOneScore;
     final String playerTwoScore;
 
-    public PreDeuce(String playerOneScore, String playerTwoScore) {
-        this.playerOneScore = new PlayerScore(playerOneScore).getScore();
-        this.playerTwoScore = new PlayerScore(playerTwoScore).getScore();
+    public PreDeuce(PlayerScore playerOneScore, PlayerScore playerTwoScore) {
+        this.playerOneScore = playerOneScore.getScore();
+        this.playerTwoScore = playerTwoScore.getScore();
     }
 
     @Override
@@ -55,7 +55,7 @@ class PreDeuce implements TennisScore {
     }
 
     private TennisScore nextTennisScore(String nextPlayerOneScore, String nextPlayerTwoScore) {
-        return new PreDeuce(nextPlayerOneScore, nextPlayerTwoScore).bestRepresentation();
+        return new PreDeuce(new PlayerScore(nextPlayerOneScore), new PlayerScore(nextPlayerTwoScore)).bestRepresentation();
     }
 
     private TennisScore bestRepresentation() {
@@ -94,7 +94,7 @@ class PreDeuce implements TennisScore {
 
 class LoveAll extends PreDeuce {
     public LoveAll() {
-        super(LOVE, LOVE);
+        super(new PlayerScore(LOVE), new PlayerScore(LOVE));
     }
 }
 
