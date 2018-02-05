@@ -10,11 +10,11 @@ interface TennisScore {
 
 enum PlayerScore {
 
-    SCORE_FIFTEEN("15"  ),
-    SCORE_THIRTY ("30"  ),
-    SCORE_FORTY  ("40"  ),
-    SCORE_WON    ("won" ),
-    SCORE_LOVE   ("love");
+    FIFTEEN("15"  ),
+    THIRTY ("30"  ),
+    FORTY  ("40"  ),
+    WON    ("won" ),
+    LOVE   ("love");
 
     private String score;
 
@@ -53,10 +53,10 @@ class PreDeuce implements TennisScore {
 
     private PlayerScore nextScore(String score) {
         switch (score) {
-            case "love": return SCORE_FIFTEEN;
-            case "15": return SCORE_THIRTY;
-            case "30": return SCORE_FORTY;
-            case "40": return SCORE_WON;
+            case "love": return FIFTEEN;
+            case   "15": return THIRTY;
+            case   "30": return FORTY;
+            case   "40": return WON;
         }
         throw new IllegalArgumentException(score);
     }
@@ -79,20 +79,20 @@ class PreDeuce implements TennisScore {
     }
 
     private boolean playerOneWon() {
-        return playerOneScore.equals(SCORE_WON);
+        return playerOneScore.equals(WON);
     }
 
     private boolean playerTwoWon() {
-        return playerTwoScore.equals(SCORE_WON);
+        return playerTwoScore.equals(WON);
     }
 
     private boolean isDeuce() {
-        return playerOneScore.equals(SCORE_FORTY) && playerTwoScore.equals(SCORE_FORTY);
+        return playerOneScore.equals(FORTY) && playerTwoScore.equals(FORTY);
     }
 
     @Override
     public String toString() {
-        if (playerOneScore.equals(SCORE_LOVE) && playerTwoScore.equals(SCORE_LOVE))
+        if (playerOneScore.equals(LOVE) && playerTwoScore.equals(LOVE))
             return "love all";
 
         return playerOneScore.getScore() + "-" + playerTwoScore.getScore();
@@ -101,7 +101,7 @@ class PreDeuce implements TennisScore {
 
 class LoveAll extends PreDeuce {
     public LoveAll() {
-        super(SCORE_LOVE, SCORE_LOVE);
+        super(LOVE, LOVE);
     }
 }
 
