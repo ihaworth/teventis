@@ -10,11 +10,11 @@ interface TennisScore {
 
 enum PlayerScore {
 
+    LOVE   ("love"),
     FIFTEEN("15"  ),
     THIRTY ("30"  ),
     FORTY  ("40"  ),
-    WON    ("won" ),
-    LOVE   ("love");
+    WON    ("won" );
 
     private String score;
 
