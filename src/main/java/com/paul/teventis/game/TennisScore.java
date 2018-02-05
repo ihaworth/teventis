@@ -62,28 +62,16 @@ class PreDeuce implements TennisScore {
     }
 
     private TennisScore bestRepresentation() {
-        if (playerOneWon())
+        if (playerOne == WON)
             return new GamePlayerOne();
 
-        if (playerTwoWon())
+        if (playerTwo == WON)
             return new GamePlayerTwo();
 
-        if (isDeuce())
+        if (bothScore(FORTY))
             return new Deuce();
 
         return this;
-    }
-
-    private boolean playerOneWon() {
-        return playerOne == WON;
-    }
-
-    private boolean playerTwoWon() {
-        return playerTwo == WON;
-    }
-
-    private boolean isDeuce() {
-        return bothScore(FORTY);
     }
 
     @Override
