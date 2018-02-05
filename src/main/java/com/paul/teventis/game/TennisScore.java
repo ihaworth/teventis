@@ -57,8 +57,8 @@ class PreDeuce implements TennisScore {
         return nextTennisScore(playerOne, playerTwo.next());
     }
 
-    private TennisScore nextTennisScore(Score playerOneScore, Score playerTwoScore) {
-        return new PreDeuce(playerOneScore, playerTwoScore).bestRepresentation();
+    private TennisScore nextTennisScore(Score playerOne, Score playerTwo) {
+        return new PreDeuce(playerOne, playerTwo).bestRepresentation();
     }
 
     private TennisScore bestRepresentation() {
