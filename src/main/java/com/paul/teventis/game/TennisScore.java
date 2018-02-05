@@ -40,12 +40,12 @@ class PreDeuce implements TennisScore {
 
     @Override
     public TennisScore when(final PlayerOneScored e) {
-        return nextTennisScore(new PlayerScore(nextScore(playerOneScore)), new PlayerScore(playerTwoScore));
+        return nextTennisScore(new PlayerScore(nextScore(playerOneScore)), playerTwoScore1);
     }
 
     @Override
     public TennisScore when(final PlayerTwoScored e) {
-        return nextTennisScore(new PlayerScore(playerOneScore), new PlayerScore(nextScore(playerTwoScore)));
+        return nextTennisScore(playerOneScore1, new PlayerScore(nextScore(playerTwoScore)));
     }
 
     public String nextScore(String score) {
