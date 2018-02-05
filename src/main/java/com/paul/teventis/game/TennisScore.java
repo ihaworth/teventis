@@ -7,6 +7,8 @@ interface TennisScore {
 }
 
 class PlayerScore {
+
+
     private String score;
 
     public PlayerScore(String score) {
@@ -25,6 +27,12 @@ class PreDeuce implements TennisScore {
     private static final String THIRTY  = "30";
     private static final String FORTY   = "40";
     private static final String WON     = "won";
+
+    public static final PlayerScore SCORE_FIFTEEN = new PlayerScore(FIFTEEN);
+    public static final PlayerScore SCORE_THIRTY  = new PlayerScore(THIRTY);
+    public static final PlayerScore SCORE_FORTY   = new PlayerScore(FORTY);
+    public static final PlayerScore SCORE_WON     = new PlayerScore(WON);
+    public static final PlayerScore SCORE_LOVE    = new PlayerScore(LOVE);
 
     final String playerOneScore;
     final String playerTwoScore;
@@ -50,10 +58,10 @@ class PreDeuce implements TennisScore {
 
     private PlayerScore nextScore(String score) {
         switch (score) {
-            case    LOVE: return new PlayerScore(FIFTEEN);
-            case FIFTEEN: return new PlayerScore(THIRTY );
-            case  THIRTY: return new PlayerScore(FORTY  );
-            case   FORTY: return new PlayerScore(WON    );
+            case    LOVE: return SCORE_FIFTEEN;
+            case FIFTEEN: return SCORE_THIRTY;
+            case  THIRTY: return SCORE_FORTY;
+            case   FORTY: return SCORE_WON;
         }
         throw new IllegalArgumentException(score);
     }
@@ -98,7 +106,7 @@ class PreDeuce implements TennisScore {
 
 class LoveAll extends PreDeuce {
     public LoveAll() {
-        super(new PlayerScore(LOVE), new PlayerScore(LOVE));
+        super(SCORE_LOVE, SCORE_LOVE);
     }
 }
 
